@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.karandev</groupId>
             <artifactId>com-karandev-util-console</artifactId>
-            <version>14.2.0</version>
+            <version>14.3.0</version>
         </dependency>
 
         <dependency>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.csystem</groupId>
             <artifactId>org-csystem-util</artifactId>
-            <version>17.1.0</version>
+            <version>17.2.0</version>
         </dependency>
 
         <dependency>
@@ -61,8 +61,20 @@
 
         <dependency>
             <groupId>org.csystem</groupId>
-            <artifactId>org-csystem-util-scheduler</artifactId>
+            <artifactId>org-csystem-util-datetime-legacy</artifactId>
             <version>14.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.csystem</groupId>
+            <artifactId>org-csystem-util-scheduler</artifactId>
+            <version>14.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.csystem</groupId>
+            <artifactId>org-csystem-generator-random</artifactId>
+            <version>14.0.1</version>
         </dependency>
 
         <dependency>

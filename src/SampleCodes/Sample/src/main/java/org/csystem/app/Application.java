@@ -1,37 +1,60 @@
 /*----------------------------------------------------------------------------------------------------------------------
-    Java'da annotation'lar kategori olarak 3 gruba ayrılır: RUNTIME, CLASS, SOURCE
-    RUNTIME: Çalışma zamanında kullanılmak üzere tasarlanmış bir annotation olduğunu belirler. Bu ketegorideki
-    annotation'ların çalışma zamanında nasıl ele alınacağı "reflection" konusunda detaylandırılacaktır.
+   Bir annotation default olarak aynı bildirimde birden fazla kez işaretlenemez. Bir annotation'ın aynı bildirimde
+   birden fazla kez yazılabilmesi için aşağıdaki adımlara göre bidirilmelidir:
+   1. Annation Reperatable isimli bir annotationb ile işraretlenir. Repeatable annotation'ı bir annotation sınıfın
+   class referansını alır.
 
-    CLASS: Derleyici tarafından arakoda yazılsa da çalışma zamanında kullanılamayan annotation olduğunu belirler.
+   2. Repeatable annotation'ına verilecek annotation'ın tekrarlanacak annotation türümde bir dizi türünden value isimli
+   bir attibute'uolmalıdır
 
-    SOURCE: Derleyicini arakoda eklemediği bir annotation olacağını belirler
-
-    Anahtar Notlar: CLASS ve SOURCE annotation'ların yazımı ve genel olarak derleme zamanında kullanımı bu kursta ele
-    alınmayacaktır. "Java ile Uygulama Geliştirme 2" kursunda ele alınacaktır
-
-    Burada anlatılan kategorilere "retention policy" denir. Bir annotation'ın "retention policy"si Retention annotation'ı
-    iler belirlenir. Bu annotation'ın value elemanı RetentionPolicy enum sınıfı türündendir. Yukarıdaki kategoriler bu
-    enum sınıfının sabitleridir
+   Burada Repeatable annotation'ına verilen annotation sınıfın Target değerleri, tekrarlanan annotation'ın target
+   değerlerinin alt kümesi olmalıdır. Ancak pratikte Target ve Retention bilgileri aynı yapılır.
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.app;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import com.karandev.util.console.commandprompt.CommandPrompt;
+import com.karandev.util.console.commandprompt.annotation.Command;
+import com.karandev.util.console.commandprompt.annotation.Commands;
+import com.karandev.util.console.commandprompt.annotation.ErrorCommand;
 
 class Application {
     public static void run(String [] args)
     {
+        var commandPrompt = new CommandPrompt.Builder()
+                .setPrompt("CSD")
+                .setSuffix(">")
+                .register(new CommandInfo())
+                .build();
 
+        commandPrompt.run();
     }
 }
 
-@Retention(RetentionPolicy.RUNTIME)
-@interface MyAnnotation {
-    //...
-}
+class CommandInfo {
+    @Command("ls")
+    @Command("list")
+    @Command("dir")
+    public void list(String path)
+    {
+        //...
+    }
 
-@Retention(RetentionPolicy.CLASS)
-@interface YourAnnotation {
-    //...
+    @Commands({@Command("copy"), @Command("cp")})
+    public void copy(String source, String target)
+    {
+        //...
+    }
+
+    @Commands({@Command("quit"), @Command})
+    public void exit()
+    {
+        //...
+    }
+
+
+    @ErrorCommand
+    public void error()
+    {
+        //...
+    }
 }
